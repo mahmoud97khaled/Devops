@@ -1,21 +1,14 @@
 pipeline {
-  agent any
+  agent any 
   stages {
-    stage('Lint HTML') {
+    stage(‘Build’) {
       steps {
-        sh 'tidy -q -e *.html'
+        sh ‘echo “Hello World”’
+        sh ‘“
+                  echo “Multiline shell steps works too”
+                  ls -lah
+               “‘
       }
     }
-
-    stage('Upload to AWS') {
-      steps {
-        withAWS(region: 'ap-southeast-2', credentials: 'aws-static') {
-          sh 'echo "Uploading content with AWS creds"'
-          s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file: 'index.html', bucket: 'static-jenkins-udacity')
-        }
-
-      }
-    }
-
   }
 }
